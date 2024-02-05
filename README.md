@@ -19,4 +19,4 @@ Copy code
 Open the Jupyter Notebook (Analysis_on_Auto_mpg.ipynb) to explore the analysis.
 
 I'm open to feedback and suggestions! If you have any insights or improvements, feel free to connect with me on LinkedIn.
-Linkedin https://www.linkedin.com/in/sami-ullah-6326b9265/
+`Linkedin` https://www.linkedin.com/in/sami-ullah-6326b9265/
