@@ -5,12 +5,12 @@ import seaborn as sns
 import plotly.express as px
 
 data = pd.read_csv("notebook/Clean_data.csv")  # Adjust the path as necessary
-st.title("Auto-Mpg Dashboard")
+st.title("🚗 Auto-Mpg Dashboard 📊")
 palettes = ['deep', 'muted', 'bright', 'pastel', 'dark', 'colorblind',
             'viridis', 'plasma', 'inferno', 'magma', 'cividis',
             'coolwarm', 'RdBu', 'vlag', 'icefire']
 
-sns.set_palette(palettes[2])
+sns.set_palette(palettes[5])
 with st.container(border=True):
     col1,col2=st.columns(2)
     with col1:
@@ -59,29 +59,52 @@ with st.container(border=True):
 
 
 with st.container():
-    col1,col2=st.columns(2)
-    with col1:
+    col1=st.columns(1)
+    with col1[0]:
         st.write("num-num")
         with st.container(border=True):
-            col,graph=st.columns(2)
-            with col:
-                col_select=st.selectbox("",options=data.describe().columns.tolist())
-            with graph:
-                graph_select=st.selectbox("",options=["Histogram","Density Plot","Boxplot"])
+            x,y=st.columns(2)
+            with x:
+                col_select1=st.selectbox("",options=data.describe().columns.tolist(),key="first_column")
+            with y:
+                col_select2=st.selectbox("",options=data.describe().columns.tolist(),key="second column")
+            with st.container():
+                graph=st.selectbox("",options=["Line","Scatter"])
         with st.container(border=True):
-            st.write("Gragh num here")
-            st.set_option('deprecation.showPyplotGlobalUse', False)
-            if(graph_select=="Histogram"):
-                plt.figure(figsize=(8, 6))
-                sns.histplot(data[col_select])
+            # st.write("Gragh num here")
+            # st.set_option('deprecation.showPyplotGlobalUse', False)
+            if(graph=="Line"):
+                plt.figure(figsize=(20, 6))
+                sns.lineplot(data=data,x=col_select1,y=col_select2)
+                st.pyplot()
+            elif(graph=="Scatter"):
+                plt.figure(figsize=(20, 6))
+                sns.scatterplot(data=data,x=col_select1,y=col_select2)
                 st.pyplot()
 
-    
-    with col2:
-        st.write("num-cat")
 
-# with st.container():
-#     col1=st.columns(1)
+
+with st.container(border=True):
+    col1=st.columns(1)
     
-#     with col1:
-#         st.write("multivariate")
+    with col1[0]:
+        st.write("multivariate")
+        col1,col2,col3=st.columns(3)
+
+        with col1:
+            x=st.selectbox("",options=data.describe().columns.tolist(),key="scatter_column1")
+        with col2:
+            y=st.selectbox("",options=data.describe().columns.tolist(),key="scatter_column2")
+        with col3:
+            z=st.selectbox("",options=data.describe().columns.tolist(),key="scatter_column3")
+        
+        with st.container(border=True):
+            fig=px.scatter_3d(data,x=x,y=y,z=z,color=x)
+            fig.update_layout(title="Multivariate Analysis")
+            st.plotly_chart(fig)
+        
+
+    with st.container():
+        fig=plt.figure(figsize=(20,7))
+        sns.heatmap(data.groupby(["mpg"])["origin"].value_counts())
+        st.pyplot()
