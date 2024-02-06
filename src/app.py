@@ -4,13 +4,28 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
+st.set_page_config(
+    page_title="Auto-Mpg Dashboard",
+    page_icon=":chart_with_upwards_trend:",  # Emoji or URL
+    layout="wide",  # "centered" or "wide"
+    initial_sidebar_state="expanded"  # "auto", "expanded", "collapsed"
+)
+
 data = pd.read_csv("notebook/Clean_data.csv")  # Adjust the path as necessary
 st.title("🚗 Auto-Mpg Dashboard 📊")
 palettes = ['deep', 'muted', 'bright', 'pastel', 'dark', 'colorblind',
             'viridis', 'plasma', 'inferno', 'magma', 'cividis',
             'coolwarm', 'RdBu', 'vlag', 'icefire']
 
-sns.set_palette(palettes[5])
+sns.set_palette(palettes[11])
+# Apply filter
+with st.container():
+    filter=st.selectbox("",options=["All"]+data["origin"].unique().tolist())
+    if(filter!="All"):
+        data=data[data["origin"]==filter]
+    else:
+        data=data
+
 with st.container(border=True):
     col1,col2=st.columns(2)
     with col1:
@@ -104,7 +119,9 @@ with st.container(border=True):
             st.plotly_chart(fig)
         
 
-    with st.container():
-        fig=plt.figure(figsize=(20,7))
-        sns.heatmap(data.groupby(["mpg"])["origin"].value_counts())
-        st.pyplot()
+    with st.container(border=True):
+        fig = plt.figure(figsize=(20, 7))
+        plt.title("Correation of each  column")
+        num_col=data.describe(exclude="O").columns
+        sns.heatmap(data[num_col].corr(), annot=True, cmap="coolwarm")
+        st.pyplot(fig)
