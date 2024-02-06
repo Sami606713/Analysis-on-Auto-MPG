@@ -29,7 +29,6 @@ with st.container():
 with st.container(border=True):
     col1,col2=st.columns(2)
     with col1:
-        st.write("num col")
         with st.container(border=True):
             col,graph=st.columns(2)
             with col:
@@ -53,7 +52,6 @@ with st.container(border=True):
                 st.pyplot()
     
     with col2:
-        st.write("catcol")
         with st.container(border=True):
             col,graph=st.columns(2)
             with col:
@@ -76,7 +74,6 @@ with st.container(border=True):
 with st.container():
     col1=st.columns(1)
     with col1[0]:
-        st.write("num-num")
         with st.container(border=True):
             x,y=st.columns(2)
             with x:
@@ -103,9 +100,7 @@ with st.container(border=True):
     col1=st.columns(1)
     
     with col1[0]:
-        st.write("multivariate")
         col1,col2,col3=st.columns(3)
-
         with col1:
             x=st.selectbox("",options=data.describe().columns.tolist(),key="scatter_column1")
         with col2:
