@@ -11,13 +11,18 @@ st.set_page_config(
     initial_sidebar_state="expanded"  # "auto", "expanded", "collapsed"
 )
 
-data = pd.read_csv("notebook/Clean_data.csv")  # Adjust the path as necessary
+# Set the title
 st.title("🚗 Auto-Mpg Dashboard 📊")
-palettes = ['deep', 'muted', 'bright', 'pastel', 'dark', 'colorblind',
-            'viridis', 'plasma', 'inferno', 'magma', 'cividis',
-            'coolwarm', 'RdBu', 'vlag', 'icefire']
 
-sns.set_palette(palettes[11])
+# Load the dataset
+data = pd.read_csv("notebook/Clean_data.csv")
+
+# GitHub link
+github_link = "[View Notebook](https://github.com/Sami606713/Analysis-on-Auto-MPG/blob/main/notebook/Analysis_on_Auto_mpg.ipynb)"
+# Render the link
+st.markdown(github_link)
+
+sns.set_palette('deep')
 # Apply filter
 with st.container():
     filter=st.selectbox("",options=["All"]+data["origin"].unique().tolist())
